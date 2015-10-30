@@ -72,8 +72,8 @@ class Rabbit(object):
         if ctx is not None:
             if not (hasattr(ctx, 'ctx_rabbitplay_ch') or
                     hasattr(ctx, 'rabbitplay_conn')):
-                ctx_rabbitplay_ch, ctx.rabbitplay_conn = self.connect()
-            return ctx_rabbitplay_ch, ctx.rabbitplay_conn
+                ctx.rabbitplay_ch, ctx.rabbitplay_conn = self.connect()
+            return ctx.rabbitplay_ch, ctx.rabbitplay_conn
 
     def produce(self, message):
         channel, connection = self.connection
