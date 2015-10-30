@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from flask import Flask
 from flask.ext.rabbitplay import Rabbit
+from time import sleep
 
 # make an app
 app = Flask('rabbit_example')
@@ -14,4 +15,6 @@ app.config['RABBIT_PASSWORD'] = 'password'
 # down the rabbit hole
 rabbit = Rabbit(app)
 with app.app_context():
-    rabbit.produce('test')
+    rabbit.produce('test01')
+    sleep(5)
+    rabbit.produce('test02')
