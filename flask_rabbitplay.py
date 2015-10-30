@@ -1,5 +1,5 @@
 from flask import current_app
-from rabbitplay import RabbitPlay, Producer
+from rabbitplay import Producer
 import ssl
 try:
     from flask import _app_ctx_stack as stack
