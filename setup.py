@@ -2,7 +2,7 @@
 Flask-RabbitPlay
 -------------
 
-Flask extension for RabbitPlay library.
+Flask extension on top of rabbitplay library.
 """
 from setuptools import setup
 
@@ -16,7 +16,7 @@ setup(
     license='GPLv2',
     author='Michael Voropaiev',
     author_email='m.voropaiev@gmail.com',
-    description='Flask extension for RabbitPlay library.',
+    description='Flask extension on top of rabbitplay library.',
     long_description=__doc__,
     py_modules=['flask_rabbitplay'],
     platforms='any',
