@@ -15,6 +15,10 @@ app.config['RABBIT_PASSWORD'] = 'password'
 # down the rabbit hole
 rabbit = Rabbit(app)
 with app.app_context():
+    sleep_secs = 5
     rabbit.produce('test01')
-    sleep(5)
+    print 'sent one message..'
+    print 'sleeping for {} seconds..'.format(sleep_secs)
+    sleep(sleep_secs)
     rabbit.produce('test02')
+    print 'sent another message..'
