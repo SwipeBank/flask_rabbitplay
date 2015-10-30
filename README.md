@@ -1,4 +1,4 @@
-# Flaks_RabbitPlay
+# RabbitPlay (Flask extension)
 
 Flask extension on top of [rabbitplay](https://github.com/SwipeBank/rabbitplay) library.
 
