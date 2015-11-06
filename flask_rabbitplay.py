@@ -43,7 +43,7 @@ class Rabbit(object):
             app.teardown_request(self.teardown)
 
     def connect(self):
-        self.rabbit = Connection.instance(
+        return Connection.instance(
             host=current_app.config['RABBIT_HOST'],
             port=current_app.config['RABBIT_PORT'],
             vhost=current_app.config['RABBIT_VHOST'],
@@ -58,7 +58,6 @@ class Rabbit(object):
             ssl_enable=current_app.config['RABBIT_SSL_ENABLE'],
             ssl_version=current_app.config['RABBIT_SSL_VERSION']
         )
-        return self.rabbit
 
     def teardown(self, exception):
         ctx = stack.top
@@ -68,10 +67,8 @@ class Rabbit(object):
     @property
     def connection(self):
         ctx = stack.top
-        if ctx is not None:
-            if not hasattr(ctx, 'rabbitplay_conn'):
-                ctx.rabbitplay_conn = self.connect()
-            return ctx.rabbitplay_conn
+        ctx.rabbitplay_conn = self.connect()
+        return ctx.rabbitplay_conn
 
     def produce(self, queue, message):
         producer = Producer(self.connection)
