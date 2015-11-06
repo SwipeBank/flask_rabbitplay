@@ -1,5 +1,6 @@
 from flask import current_app
 from rabbitplay import Producer
+from rabbitplay import RabbitConnection as Connection
 import ssl
 try:
     from flask import _app_ctx_stack as stack
@@ -7,7 +8,6 @@ except ImportError:
     from flask import _request_ctx_stack as stack
 
 CONFIG_DEFAULTS = {
-    'RABBIT_QUEUE': 'queue',
     'RABBIT_HOST': 'localhost',
     'RABBIT_PORT': 5672,
     'RABBIT_VHOST': None,
@@ -43,8 +43,7 @@ class Rabbit(object):
             app.teardown_request(self.teardown)
 
     def connect(self):
-        self.rabbit = Producer(
-            queue=current_app.config['RABBIT_QUEUE'],
+        self.rabbit = Connection.instance(
             host=current_app.config['RABBIT_HOST'],
             port=current_app.config['RABBIT_PORT'],
             vhost=current_app.config['RABBIT_VHOST'],
@@ -59,7 +58,7 @@ class Rabbit(object):
             ssl_enable=current_app.config['RABBIT_SSL_ENABLE'],
             ssl_version=current_app.config['RABBIT_SSL_VERSION']
         )
-        return self.rabbit.get_channel()
+        return self.rabbit
 
     def teardown(self, exception):
         ctx = stack.top
@@ -70,11 +69,10 @@ class Rabbit(object):
     def connection(self):
         ctx = stack.top
         if ctx is not None:
-            if not (hasattr(ctx, 'ctx_rabbitplay_ch') or
-                    hasattr(ctx, 'rabbitplay_conn')):
-                ctx.rabbitplay_ch, ctx.rabbitplay_conn = self.connect()
-            return ctx.rabbitplay_ch, ctx.rabbitplay_conn
+            if not hasattr(ctx, 'rabbitplay_conn'):
+                ctx.rabbitplay_conn = self.connect()
+            return ctx.rabbitplay_conn
 
-    def produce(self, message):
-        channel, connection = self.connection
-        self.rabbit.publish(message)
+    def produce(self, queue, message):
+        producer = Producer(self.connection)
+        return producer.publish(queue, message)
