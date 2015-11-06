@@ -10,12 +10,15 @@ Code:
 from flask import Flask
 from flask.ext.rabbitplay import Rabbit
 
-app = Flask('rabbit_example')
+app = Flask(__name__)
 
 rabbit = Rabbit(app)
-with app.app_context():
-    rabbit.produce('test')
 
+@app.route('/', methods=['GET'])
+def send_msg():
+    return str(rabbit.produce('rabbit_queue1', 'test01'))
+
+app.run()
 ```
 Command line:
 ```sh
