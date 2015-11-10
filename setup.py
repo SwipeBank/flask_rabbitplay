@@ -6,7 +6,7 @@ Flask extension on top of rabbitplay library.
 """
 from setuptools import setup
 
-rabbit_url = 'git+ssh://git@github.com/SwipeBank/rabbitplay.git'
+rabbit_url = 'git+https://github.com/SwipeBank/rabbitplay.git'
 rabbit_ver = '0.7'
 
 setup(
