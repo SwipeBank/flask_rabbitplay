@@ -1,6 +1,6 @@
 Flask==0.10.1
 pika==0.10.0
-git+https://github.com/SwipeBank/rabbitplay.git@0.7#egg=rabbitplay-0.7
+rabbitplay==0.7.1
 
 # testing
 nose==1.3.7
