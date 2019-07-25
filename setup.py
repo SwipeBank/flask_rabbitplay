@@ -21,7 +21,7 @@ setup(
     py_modules=['flask_rabbitplay'],
     platforms='any',
     install_requires=[
-        'Flask==0.10.1',
+        'Flask==1.0',
         'pika==0.10.0',
         'rabbitplay=={ver}'.format(
             ver=rabbit_ver
