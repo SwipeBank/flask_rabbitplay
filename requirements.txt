@@ -1,4 +1,4 @@
-Flask==1.0
+Flask==2.3.2
 pika==0.10.0
 git+https://github.com/SwipeBank/rabbitplay.git@0.7#egg=rabbitplay-0.7
 
